@@ -1,3 +1,15 @@
 body {
     background-color: rgba(229, 238, 255, 0.885);
 }
+
+h1 {
+    text-decoration: underline;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    margin: 0;
+}
