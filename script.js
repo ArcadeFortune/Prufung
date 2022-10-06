@@ -1,24 +1,54 @@
+function doneBtn(completed, taskid) {
+    const doneBtn = document.createElement("button");
+    doneBtn.innerText = "✓";
+    doneBtn.className = "nr" + taskid;
+    doneBtn.onclick = function () {
+        done()
+    }
+    return doneBtn
+
+}
 
 
-function createCell(text, id) {
+
+
+
+function done() {
+    alert("done")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function createCell(text, taskid) {
     const cell = document.createElement("td");
     cell.innerText = text;
-    cell.className = "nr" + id;
+    cell.className = "nr" + taskid;
     return cell;
 }
 
 function delBtn(taskid) {
     const quickBtn = document.createElement("td");
     const btn = document.createElement("button");
-    btn.innerText = "🗑️";
-    btn.id = "delBtn"
-    btn.className = "nr" + taskid
+    btn.innerText = "🗑️";    
+    btn.classList.add('nr' + taskid);
     btn.onclick = function () {
         delTask(taskid)
     }
     quickBtn.appendChild(btn)
     return quickBtn
 }
+
 
 function renderTasks(tasks) {
     const tableBody = document.querySelector("tbody");
@@ -64,7 +94,6 @@ function createTask(task) {
     fetch("http://localhost:3000/tasks")
         .then((response) => response.json())
         .then((data) => {
-            console.log("The next ID that will be given to the new Task is gonna be: " + (data.length + 1))
             let newid = (data.length + 1)
 
             const daten = {
@@ -81,7 +110,7 @@ function createTask(task) {
             })
                 .then((response) => response.json())
                 .then((daten) => {
-                    console.log('Success:', daten);
+                    console.log('Successfully added:', daten);
                 addRow(daten)
                     
                 })
@@ -112,7 +141,7 @@ function addRow(daten) {
     tableRow.append(
         createCell(daten.id, daten.id),
         createCell(daten.title, daten.id),
-        createCell(daten.completed, daten.id),
+        doneBtn(daten.completed, daten.id),
         delBtn(daten.id));
     tableBody.appendChild(tableRow);
 } 
@@ -136,9 +165,7 @@ function delTask(taskid) {
         headers: {
             'Content-type': 'application/json'}})
                 .then(response => response.json())
-                .then(data => console.log(data))
                 .catch(err => console.log(err))
-                console.log(taskid);
                 
         };
 
