@@ -4,18 +4,14 @@ function createDoneBtn(daten) {
     doneBtn.className = "nr" + daten.id;
     daten.completed ? doneBtn.style.backgroundColor = "green" : doneBtn.style.backgroundColor = "inhreit"; //make it colorful, do it also for the delete button
     doneBtn.onclick = function () {
-        console.log("before it gets clicked, it needs to be fetched")
+        console.log("before it gets clicked, we need to fetch")
         fetch("http://localhost:3000/tasks")
             .then((response) => response.json())
             .then((data) => {
                 console.log(data)
-                console.log("data.id: ", data.id)
-                console.log("datEN.id: ", daten.id)
-                const indegs = daten.id - 1
-                console.log(indegs)
-                const testint = data.find(car => car.id === daten.id)
-                console.log("this is what i belive the correct selector: ", testint)
-                done(doneBtn, testint)
+                const specificData = data.find(haha => haha.id === daten.id)
+                console.log("I saw which button you pressed so i will to the doneClicker", specificData)
+                done(doneBtn, specificData)
             })
     }
     return doneBtn
@@ -41,8 +37,8 @@ function done(doneBtn, daten) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("Task has been updated to: UNCOMPLETED\nHere is the current data now", data, "\n\n\n\n")
-                console.log("Task is UNCOMPLETED so it needs to be checked off / white")
+                console.log("Task has been updated to: UNCOMPLETED\nHere is the current data now", data)
+                console.log("Task is UNCOMPLETED so it needs to be checked off / white\n\n\n\n\n")
                 doneBtn.style.backgroundColor = "white"
                 //make it colorful, do it also for the delete button
             })
@@ -65,8 +61,8 @@ function done(doneBtn, daten) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("Task has been updated to: COMPLETED\nHere is the current data now", data, "\n\n\n\n") 
-                console.log("Task is now COMPLETED, meaning it should be checked on / green")
+                console.log("Task has been updated to: COMPLETED\nHere is the current data now", data) 
+                console.log("Task is now COMPLETED, meaning it should be checked on / green\n\n\n\n\n")
                 doneBtn.style.backgroundColor = "green"
             //make it colorful, do it also for the delete button
             })
@@ -88,6 +84,7 @@ function delBtn(taskid) {
     btn.innerText = "🗑️";    
     btn.classList.add('nr' + taskid);
     btn.onclick = function () {
+        console.log("You clicked the delete button with the ID: ", taskid)
         delTask(taskid)
     }
     btn.onmouseover = function () {
@@ -188,6 +185,7 @@ function delTask(taskid) {
     
     const mull = document.getElementsByClassName("nr" + taskid);
     const a = document.createElement("input")
+    console.log("deleting the row with the id: ", taskid)
     mull[0].remove();
     mull[0].remove(); //idk why but it delets the whole row
     mull[0].remove();
@@ -203,7 +201,10 @@ function delTask(taskid) {
         credentials: "include",
         headers: {
             'Content-type': 'application/json'}})
-                .then(response => response.json())
+                .then(response => {
+                    response.json()
+                    console.log("Also fetched a delete so it stays deleted :^)\n\n\n\n\n")
+                })
                 .catch(err => console.log(err))
                 
         };
