@@ -1,10 +1,11 @@
-function doneBtn(daten) {
+function CreateDoneBtn(daten) {
     const doneBtn = document.createElement("button");
     doneBtn.innerText = "✓";
     doneBtn.className = "nr" + daten.id;
     doneBtn.onclick = function () {
-        done(daten)
+        done(doneBtn, daten)
     }
+    daten.completed ? doneBtn.style.backgroundColor = "green" : doneBtn.style.backgroundColor = "inhreit"; //make it colorful, do it also for the delete button
     return doneBtn
 
 }
@@ -12,63 +13,57 @@ function doneBtn(daten) {
 
 
 
-
-function done(daten) {
+function done(doneBtn, daten) {
+    console.log("done has been clicked: here are its values:", daten);
     if (daten.completed) {
-        console.log("making it false")
-
-        const dataf = {
-            "id": daten.id,
-            "title": daten.title,
-            "completed": false
+        console.log("This task is completed");
+        const datenf = {
+            id: daten.id,
+            title: daten.title,
+            completed: false
         }
-
-
-        fetch("http://localhost:3000/tasks", {
-            method: "PUT",
-            headers: {
-                "Content-Type": "appliation/json"
-            },
-            body: JSON.stringify(dataf)
-        })
-        .then((response) => response.json())
-        .then((dataf) => {
-            console.log("Data succesfully retreaved:" + dataf)
-        })
-        console.log("made it false")
-
-
-
-    } else {
-        console.log("making it true")
-        console.log(daten)
-
-        const datat = {
-            "id" : 10,
-            "completed" : false,
-            "title" : "Feed pets"
-          }
-          console.log(daten.id)
         fetch("http://localhost:3000/tasks", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(datat)
+            body: JSON.stringify(datenf)
         })
-        .then((response) => response.json())
-        .then((datat) => {
-            console.log("Data succesfully retreaved:" + datat)
-            console.log("made it true")
-        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Task has been updated to: UNCOMPLETED\nHere is the current data now", data) 
+                console.log("\n\n\n\n\n\n\n\nMaking the done button green now...") 
+                doneBtn.style.backgroundColor = "white"
+            })
     }
 
 
 
-
+    else {
+        console.log("This task is not completed yet\nI will mark it as COMPLETED✓\n\n\n\n\n\n\n");
+        const datent = {
+            id: daten.id,
+            title: daten.title,
+            completed: true
+        }
+        console.log("I am going to fetch:", datent, " with a put method\n\n\n\n\n");
+        console.log("And this is the acutal data in the API that will be changed:\n", daten, "\n", datent, "\nAbove me is the new data")
+        console.log("starting to fetch...")
+        fetch("http://localhost:3000/tasks", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datent)
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Task has been updated to: COMPLETED\nHere is the current data now", data) 
+                console.log("\n\n\n\n\n\n\n\nMaking the done button green now...") 
+                doneBtn.style.backgroundColor = "green"
+            })
+    }
 }
-
-
 
 
 function createCell(text, taskid) {
@@ -85,6 +80,12 @@ function delBtn(taskid) {
     btn.classList.add('nr' + taskid);
     btn.onclick = function () {
         delTask(taskid)
+    }
+    btn.onmouseover = function () {
+        btn.style.backgroundColor = "red"
+    }
+    btn.onmouseout = function () {
+        btn.style.backgroundColor = "white"
     }
     quickBtn.appendChild(btn)
     return quickBtn
@@ -124,7 +125,7 @@ function indexTasks() {
         .then((data) => renderTasks(data))
 }
 // fetch("http://localhost:3000/tasks")
-//     .then((Response) => { return Response.json()})
+//     .then((response) => { return response.json()})
 //     .then((data) => {tasks = data})
 //     console.log("tasks indexed inside data" + tasks.title)
 
@@ -182,7 +183,7 @@ function addRow(daten) {
     tableRow.append(
         createCell(daten.id, daten.id),
         createCell(daten.title, daten.id),
-        doneBtn(daten),
+        CreateDoneBtn(daten),
         delBtn(daten.id));
     tableBody.appendChild(tableRow);
 } 
