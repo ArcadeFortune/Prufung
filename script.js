@@ -7,13 +7,19 @@ function createDoneBtn(daten) {
         console.log("before it gets clicked, it needs to be fetched")
         fetch("http://localhost:3000/tasks")
             .then((response) => response.json())
-            .then((data) => done(doneBtn, data[daten.id - 1]))
+            .then((data) => {
+                console.log(data)
+                console.log("data.id: ", data.id)
+                console.log("datEN.id: ", daten.id)
+                const indegs = daten.id - 1
+                console.log(indegs)
+                const testint = data.find(car => car.id === daten.id)
+                console.log("this is what i belive the correct selector: ", testint)
+                done(doneBtn, testint)
+            })
     }
     return doneBtn
-
 }
-
-
 
 
 function done(doneBtn, daten) {
@@ -39,14 +45,8 @@ function done(doneBtn, daten) {
                 console.log("Task is UNCOMPLETED so it needs to be checked off / white")
                 doneBtn.style.backgroundColor = "white"
                 //make it colorful, do it also for the delete button
-
-
-
-
             })
     }
-
-
 
     else {
         console.log("Meaning this task is not completed yet\nI will mark it as COMPLETED✓");
@@ -66,8 +66,6 @@ function done(doneBtn, daten) {
             .then((response) => response.json())
             .then((data) => {
                 console.log("Task has been updated to: COMPLETED\nHere is the current data now", data, "\n\n\n\n") 
-
-
                 console.log("Task is now COMPLETED, meaning it should be checked on / green")
                 doneBtn.style.backgroundColor = "green"
             //make it colorful, do it also for the delete button
@@ -82,6 +80,7 @@ function createCell(text, taskid) {
     cell.className = "nr" + taskid;
     return cell;
 }
+
 
 function delBtn(taskid) {
     const quickBtn = document.createElement("td");
@@ -112,7 +111,6 @@ function renderTasks(tasks) {
     addBtn.onclick = function () {
         addTask()
     };
-
     // if (loggedint){}
     tasks.forEach((tasks) => {
         addRow(tasks)
@@ -123,22 +121,11 @@ function renderTasks(tasks) {
 }
 
 
-// , {
-//     credentials: "include",
-//     headers: {
-//         'Content-Type': 'application/json'
-//     }}
-
 function indexTasks() {
     fetch("http://localhost:3000/tasks")
         .then((response) => response.json())
         .then((data) => renderTasks(data))
 }
-// fetch("http://localhost:3000/tasks")
-//     .then((response) => { return response.json()})
-//     .then((data) => {tasks = data})
-//     console.log("tasks indexed inside data" + tasks.title)
-
 
 
 function createTask(task) {
