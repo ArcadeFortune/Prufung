@@ -1,9 +1,9 @@
-function doneBtn(completed, taskid) {
+function doneBtn(daten) {
     const doneBtn = document.createElement("button");
     doneBtn.innerText = "✓";
-    doneBtn.className = "nr" + taskid;
+    doneBtn.className = "nr" + daten.id;
     doneBtn.onclick = function () {
-        done()
+        done(daten)
     }
     return doneBtn
 
@@ -13,19 +13,60 @@ function doneBtn(completed, taskid) {
 
 
 
-function done() {
-    alert("done")
+function done(daten) {
+    if (daten.completed) {
+        console.log("making it false")
+
+        const dataf = {
+            "id": daten.id,
+            "title": daten.title,
+            "completed": false
+        }
+
+
+        fetch("http://localhost:3000/tasks", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "appliation/json"
+            },
+            body: JSON.stringify(dataf)
+        })
+        .then((response) => response.json())
+        .then((dataf) => {
+            console.log("Data succesfully retreaved:" + dataf)
+        })
+        console.log("made it false")
+
+
+
+    } else {
+        console.log("making it true")
+        console.log(daten)
+
+        const datat = {
+            "id" : 10,
+            "completed" : false,
+            "title" : "Feed pets"
+          }
+          console.log(daten.id)
+        fetch("http://localhost:3000/tasks", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datat)
+        })
+        .then((response) => response.json())
+        .then((datat) => {
+            console.log("Data succesfully retreaved:" + datat)
+            console.log("made it true")
+        })
+    }
+
+
+
+
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -141,7 +182,7 @@ function addRow(daten) {
     tableRow.append(
         createCell(daten.id, daten.id),
         createCell(daten.title, daten.id),
-        doneBtn(daten.completed, daten.id),
+        doneBtn(daten),
         delBtn(daten.id));
     tableBody.appendChild(tableRow);
 } 
