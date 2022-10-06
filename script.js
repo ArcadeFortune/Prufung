@@ -4,7 +4,7 @@ function createDoneBtn(daten) {
     doneBtn.className = "nr" + daten.id;
     daten.completed ? doneBtn.style.backgroundColor = "green" : doneBtn.style.backgroundColor = "inhreit"; //make it colorful, do it also for the delete button
     doneBtn.onclick = function () {
-        console.log("before it gets clicked, we need to fetch")
+        console.log("\n\n\n\nbefore it gets clicked, we need to fetch")
         fetch("http://localhost:3000/tasks")
             .then((response) => response.json())
             .then((data) => {
@@ -38,7 +38,7 @@ function done(doneBtn, daten) {
             .then((response) => response.json())
             .then((data) => {
                 console.log("Task has been updated to: UNCOMPLETED\nHere is the current data now", data)
-                console.log("Task is UNCOMPLETED so it needs to be checked off / white\n\n\n\n\n")
+                console.log("Task is UNCOMPLETED so it needs to be checked off / white")
                 doneBtn.style.backgroundColor = "white"
                 //make it colorful, do it also for the delete button
             })
@@ -62,7 +62,7 @@ function done(doneBtn, daten) {
             .then((response) => response.json())
             .then((data) => {
                 console.log("Task has been updated to: COMPLETED\nHere is the current data now", data) 
-                console.log("Task is now COMPLETED, meaning it should be checked on / green\n\n\n\n\n")
+                console.log("Task is now COMPLETED, meaning it should be checked on / green ")
                 doneBtn.style.backgroundColor = "green"
             //make it colorful, do it also for the delete button
             })
@@ -84,7 +84,7 @@ function delBtn(taskid) {
     btn.innerText = "🗑️";    
     btn.classList.add('nr' + taskid);
     btn.onclick = function () {
-        console.log("You clicked the delete button with the ID: ", taskid)
+        console.log("\n\n\n\nYou clicked the delete button with the ID: ", taskid)
         delTask(taskid)
     }
     btn.onmouseover = function () {
@@ -127,6 +127,7 @@ function indexTasks() {
 
 function createTask(task) {
     let daten;
+    console.log("I have to fetch to see what new ID i can give your new Task")
     fetch("http://localhost:3000/tasks")
         .then((response) => response.json())
         .then((data) => {
@@ -137,16 +138,17 @@ function createTask(task) {
                 "title": task,
                 "completed": false
             };
+            console.log("I fetched, the new task is going to have the id: ", newid)
             fetch('http://localhost:3000/tasks', {
-                method: 'POST', // or 'PUT'
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(daten),
+                body: JSON.stringify(daten)
             })
                 .then((response) => response.json())
                 .then((daten) => {
-                    console.log('Successfully added:', daten);
+                    console.log('I successfully fetched:', daten);
                 addRow(daten)
                     
                 })
@@ -157,11 +159,13 @@ function createTask(task) {
 }
 
 function addTask() {
+    console.log("\n\n\n\nI see you desire to create a new task\nSo i prepared a field for you to type in")
     const taskMaker = document.createElement("input");
     taskMaker.placeholder = "Hier Hinzufügen";
     taskMaker.className = "taskMaker";
     taskMaker.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
+            console.log("Creating your \'", taskMaker.value, "\' task...")
             createTask(taskMaker.value)
             taskMaker.remove()
         }
@@ -203,7 +207,7 @@ function delTask(taskid) {
             'Content-type': 'application/json'}})
                 .then(response => {
                     response.json()
-                    console.log("Also fetched a delete so it stays deleted :^)\n\n\n\n\n")
+                    console.log("Also fetched a delete so it stays deleted :^)")
                 })
                 .catch(err => console.log(err))
                 
