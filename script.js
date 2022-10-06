@@ -1,11 +1,14 @@
-function CreateDoneBtn(daten) {
+function createDoneBtn(daten) {
     const doneBtn = document.createElement("button");
     doneBtn.innerText = "✓";
     doneBtn.className = "nr" + daten.id;
-    doneBtn.onclick = function () {
-        done(doneBtn, daten)
-    }
     daten.completed ? doneBtn.style.backgroundColor = "green" : doneBtn.style.backgroundColor = "inhreit"; //make it colorful, do it also for the delete button
+    doneBtn.onclick = function () {
+        console.log("before it gets clicked, it needs to be fetched")
+        fetch("http://localhost:3000/tasks")
+            .then((response) => response.json())
+            .then((data) => done(doneBtn, data[daten.id - 1]))
+    }
     return doneBtn
 
 }
@@ -16,12 +19,13 @@ function CreateDoneBtn(daten) {
 function done(doneBtn, daten) {
     console.log("done has been clicked: here are its values:", daten);
     if (daten.completed) {
-        console.log("This task is completed");
+        console.log("Meaning this task is completed");
         const datenf = {
             id: daten.id,
             title: daten.title,
             completed: false
         }
+        console.log("I am going to fetch:", datenf, " with a put method");
         fetch("http://localhost:3000/tasks", {
             method: "PUT",
             headers: {
@@ -31,24 +35,27 @@ function done(doneBtn, daten) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("Task has been updated to: UNCOMPLETED\nHere is the current data now", data) 
-                console.log("\n\n\n\n\n\n\n\nMaking the done button green now...") 
+                console.log("Task has been updated to: UNCOMPLETED\nHere is the current data now", data, "\n\n\n\n")
+                console.log("Task is UNCOMPLETED so it needs to be checked off / white")
                 doneBtn.style.backgroundColor = "white"
+                //make it colorful, do it also for the delete button
+
+
+
+
             })
     }
 
 
 
     else {
-        console.log("This task is not completed yet\nI will mark it as COMPLETED✓\n\n\n\n\n\n\n");
+        console.log("Meaning this task is not completed yet\nI will mark it as COMPLETED✓");
         const datent = {
             id: daten.id,
             title: daten.title,
             completed: true
         }
-        console.log("I am going to fetch:", datent, " with a put method\n\n\n\n\n");
-        console.log("And this is the acutal data in the API that will be changed:\n", daten, "\n", datent, "\nAbove me is the new data")
-        console.log("starting to fetch...")
+        console.log("I am going to fetch:", datent, " with a put method");
         fetch("http://localhost:3000/tasks", {
             method: "PUT",
             headers: {
@@ -58,9 +65,12 @@ function done(doneBtn, daten) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("Task has been updated to: COMPLETED\nHere is the current data now", data) 
-                console.log("\n\n\n\n\n\n\n\nMaking the done button green now...") 
+                console.log("Task has been updated to: COMPLETED\nHere is the current data now", data, "\n\n\n\n") 
+
+
+                console.log("Task is now COMPLETED, meaning it should be checked on / green")
                 doneBtn.style.backgroundColor = "green"
+            //make it colorful, do it also for the delete button
             })
     }
 }
@@ -183,7 +193,7 @@ function addRow(daten) {
     tableRow.append(
         createCell(daten.id, daten.id),
         createCell(daten.title, daten.id),
-        CreateDoneBtn(daten),
+        createDoneBtn(daten),
         delBtn(daten.id));
     tableBody.appendChild(tableRow);
 } 
