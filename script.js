@@ -1,11 +1,21 @@
 
 
-
-
     function createCell(text) {
         const cell = document.createElement("td");
         cell.innerText = text;
         return cell;
+    }
+
+    function delBtn() {
+        const quickBtn = document.createElement("td");
+        const btn = document.createElement("button");
+        btn.innerText = "✓";
+        btn.className = "delBtn"
+        btn.onclick = function() {
+            delTask()
+        }
+        quickBtn.appendChild(btn)
+        return quickBtn
     }
 
     function renderTasks(tasks) {
@@ -22,7 +32,7 @@
         // if (loggedint){}
         tasks.forEach((tasks) => {
             const tableRow = document.createElement("tr");
-            tableRow.append(createCell(tasks.id), createCell(tasks.title), createCell(tasks.completed));
+            tableRow.append(createCell(tasks.id), createCell(tasks.title), createCell(tasks.completed), delBtn());
             tableBody.appendChild(tableRow); 
         })
 
@@ -31,14 +41,11 @@
     }
 
 
-
-    function getTasks(){
-        fetch("https//localhost:3000/tasks")
-            .then((Response) => Response.json())
-            .then((data) => renderTasks(data))
-    }
-
-
+    // , {
+    //     credentials: "include",
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     }}
 
     function indexTasks() {
         fetch("http://localhost:3000/tasks")
@@ -52,25 +59,59 @@
                 
 
 
+    function createTask(task) {
+        let daten;
+        fetch("http://localhost:3000/tasks")
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("The next ID that will be given to the new Task is gonna be: " + (data.length + 1))
+                let newid = (data.length + 1)
 
-    // function createTask(task) {
-    //     fetch("https://localhost:3000", {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json"
-            
-    //         },
-    //         body: JSON.stringify(task)
-    //     }).then(alert("hallo"))
-    // }
+                const daten = {
+                    "id":newid,
+                    "title":task,
+                    "completed":false
+                };
+                fetch('http://localhost:3000/tasks', {
+                    method: 'POST', // or 'PUT'
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(daten),
+                  })
+                    .then((response) => response.json())
+                    .then((daten) => {
+                      console.log('Success:', daten);
+                        
+                    const tableBody = document.querySelector("tbody");
+                    const tableRow = document.createElement("tr");
+                    tableRow.append(createCell(daten.id), createCell(daten.title), createCell(daten.completed));
+                    tableBody.appendChild(tableRow); 
+                    })
+
+
+
+            })
+    }
 
     function addTask() {
         const taskMaker = document.createElement("input");
-        taskMaker.placeholder = "Watch Date A Live";
+        taskMaker.placeholder = "Hier Hinzufügen";
+        taskMaker.className = "taskMaker";
+        taskMaker.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                createTask(taskMaker.value)
+                taskMaker.remove()
+            }
+        })
         const test = document.querySelector(".platzhalter");
         test.append(taskMaker);
+        taskMaker.focus();
     }
 
+    function delTask() {
+        alert("34");
+    }
 
 
 
@@ -95,13 +136,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    const loginBtn = document.getElementById("login");
+    ;
+    
 
-    loginBtn.addEventListener("click", () => {
+    document.getElementsByClassName("login").addEventListener("click", () => {
         window.open("login.html", "_blank", "popup")
+    });
 
-
-    })
 
 
     
