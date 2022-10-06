@@ -1,8 +1,9 @@
 
 
-function createCell(text) {
+function createCell(text, id) {
     const cell = document.createElement("td");
     cell.innerText = text;
+    cell.className = "nr" + id;
     return cell;
 }
 
@@ -33,10 +34,10 @@ function renderTasks(tasks) {
     tasks.forEach((tasks) => {
         const tableRow = document.createElement("tr");
         tableRow.append(
-            createCell(tasks.id),
-            createCell(tasks.title),
-            createCell(tasks.completed),
-            delBtn(tasks.id)
+            createCell(tasks.id, tasks.id),
+            createCell(tasks.title, tasks.id),
+            createCell(tasks.completed, tasks.id),
+            delBtn(tasks.id, tasks.id)
         );
         tableBody.appendChild(tableRow);
     })
@@ -90,7 +91,7 @@ function createTask(task) {
 
                     const tableBody = document.querySelector("tbody");
                     const tableRow = document.createElement("tr");
-                    tableRow.append(createCell(daten.id), createCell(daten.title), createCell(daten.completed));
+                    tableRow.append(createCell(daten.id, daten.id), createCell(daten.title, daten.id), createCell(daten.completed, daten.id));
                     tableBody.appendChild(tableRow);
                 })
 
@@ -115,7 +116,6 @@ function addTask() {
 }
 
 function delTask(taskid) {
-    console.log(taskid)
     // fetch('http://localhost:3000/tasks/' + taskid, {
     //     method: 'DELETE',
     //   })
@@ -130,9 +130,8 @@ function delTask(taskid) {
                 .then(response => response.json())
                 .then(data => console.log(data))
                 .catch(err => console.log(err))
-
-
-                alert("hi")
+                console.log(taskid)
+                
         };
 
 
