@@ -10,8 +10,9 @@ function createCell(text, id) {
 function delBtn(taskid) {
     const quickBtn = document.createElement("td");
     const btn = document.createElement("button");
-    btn.innerText = "✓";
-    btn.className = "delBtn"
+    btn.innerText = "🗑️";
+    btn.id = "delBtn"
+    btn.className = "nr" + taskid
     btn.onclick = function () {
         delTask(taskid)
     }
@@ -32,14 +33,7 @@ function renderTasks(tasks) {
 
     // if (loggedint){}
     tasks.forEach((tasks) => {
-        const tableRow = document.createElement("tr");
-        tableRow.append(
-            createCell(tasks.id, tasks.id),
-            createCell(tasks.title, tasks.id),
-            createCell(tasks.completed, tasks.id),
-            delBtn(tasks.id, tasks.id)
-        );
-        tableBody.appendChild(tableRow);
+        addRow(tasks)
     })
 
     tableCaption.append(platzhalter)
@@ -88,11 +82,8 @@ function createTask(task) {
                 .then((response) => response.json())
                 .then((daten) => {
                     console.log('Success:', daten);
-
-                    const tableBody = document.querySelector("tbody");
-                    const tableRow = document.createElement("tr");
-                    tableRow.append(createCell(daten.id, daten.id), createCell(daten.title, daten.id), createCell(daten.completed, daten.id));
-                    tableBody.appendChild(tableRow);
+                addRow(daten)
+                    
                 })
 
 
@@ -115,7 +106,24 @@ function addTask() {
     taskMaker.focus();
 }
 
+function addRow(daten) {
+    const tableBody = document.querySelector("tbody");
+    const tableRow = document.createElement("tr");
+    tableRow.append(
+        createCell(daten.id, daten.id),
+        createCell(daten.title, daten.id),
+        createCell(daten.completed, daten.id),
+        delBtn(daten.id));
+    tableBody.appendChild(tableRow);
+} 
 function delTask(taskid) {
+    
+    const mull = document.getElementsByClassName("nr" + taskid);
+    const a = document.createElement("input")
+    mull[0].remove();
+    mull[0].remove(); //idk why but it delets the whole row
+    mull[0].remove();
+    mull[0].remove();
     // fetch('http://localhost:3000/tasks/' + taskid, {
     //     method: 'DELETE',
     //   })
@@ -130,7 +138,7 @@ function delTask(taskid) {
                 .then(response => response.json())
                 .then(data => console.log(data))
                 .catch(err => console.log(err))
-                console.log(taskid)
+                console.log(taskid);
                 
         };
 
