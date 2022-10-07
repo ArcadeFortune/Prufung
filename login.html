@@ -4,11 +4,69 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script> 
+    const divWhenNotLoggedIn = document.getElementById("notLoggedIn")
+    const divWehnLoggedIn = document.getElementById("loggedIn")
+    document.addEventListener("DOMContentLoaded", () => {
+        checkLoggedIn();
+
+        document.getElementById("login2").addEventListener("submit", function (event) {
+            console.log("Sie haben auf submit geschrieben")
+            event.preventDefautl()
+            const email = document.getElementById("emailInput").value
+            const password = document.getElementById("passwordInput").value
+            const login = {
+                email: email,
+                password: password
+            }
+            alert(JSON.stringify(login))
+            console.log("hier ist die response")
+            fetch("http://127.0.0.1:3000/auth/cookie/login", {
+                credentials:"include",
+                method: "POST",
+                body: JSON.stringify(login),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+        })
+
+    })
+
+    function checkLoggedIn() {
+        fetch("http://127.0.0.1:3000/auth/cookie/status", {
+            credentials: "include"
+        }).then(function (response) {
+            console.log(response)
+            if (response.status === 401) {
+                console.log("sie sind nicht eingeloggt")
+                // divWehnLoggedIn.style.display = "hidden" //not making it hidden
+                // divWhenNotLoggedIn.style.display = "inherit"
+            }
+        })
+    }
+    </script>
     <title>Document</title>
 </head>
 <body>
-    <h1>LOGIN</h1>
-    <input type="email">
-    <input type="password">
+    
+    <div id="loggedIn" class="hidden">
+        <p>Sie sind eingeloggt!</p>
+        <div id="notLoggedIn" class="hidden">
+            <h1>LOGIN</h1>
+            <form id="login2">
+            <div>
+                <label for="emailInput">
+                <input type="email" name="email" id="emailInput" placeholder="E-mail" required>
+            </label>
+            </div>
+            <div>
+                <label for="passwordInput"></label>
+                <input type="password" name="password" id="passwordInput" placeholder="Passwort" required>
+            </div>
+            <input type="submit"></form>
+        </div>
+
+    </div>
 </body>
 </html>

@@ -10,6 +10,7 @@ function renderTasks(tasks) {
     const addBtn = document.createElement("button");
     const platzhalter = document.createElement("p");
     addBtn.innerText = "Hinzufügen";
+    addBtn.classList.add("login", "btn", "abc")   
     platzhalter.className = "platzhalter";
     addBtn.onclick = function () {
         addTask()
@@ -64,8 +65,11 @@ function addRow(daten) {
 //Einzelne Komponenten für eine ROW
 //Cell - Creation
 function createCell(text, taskid) {
-    const cell = document.createElement("td");
-    cell.innerText = text;
+    const cell = document.createElement("td");  
+    if (typeof text === 'string') {
+        console.log("this cell is a String  ")
+        cell.innerText = text;
+    }    
     cell.classList.add("nr" + taskid);
     cell.style.paddingRight = "20px"
     cell.style.paddingBottom = "3px"
@@ -124,13 +128,16 @@ function createTask(task) {
 
 //Edit Button - Creation
 function createEditBtn(daten) {
+    const editBtnTd = document.createElement("td");
     const editBtn = document.createElement("button");
     editBtn.innerText = daten.title;
-    editBtn.className = "nr" + daten.id;
+    editBtn.classList.add("nr" + daten.id, "myBtn")
     editBtn.onclick = function () {
         editTask(daten);        
     };
-    return editBtn;
+    editBtn.style.width = "200px"
+    editBtnTd.appendChild(editBtn)
+    return editBtnTd;
 };
 
 //Edit Button - When it's clicked
@@ -163,10 +170,11 @@ function editTask(daten) {
 
 //Done Button - Creation
 function createDoneBtn(daten) {
+    const doneBtnTd = document.createElement("td");
     const doneBtn = document.createElement("button");
     doneBtn.innerText = "✓";
-    doneBtn.className = "nr" + daten.id;
-    daten.completed ? doneBtn.style.backgroundColor = "green" : doneBtn.style.backgroundColor = "inhreit"; //make it colorful, do it also for the delete button
+    doneBtn.classList.add("nr" + daten.id)
+    daten.completed ? doneBtn.classList.add("myDoneBtnChecked") : doneBtn.classList.add("myDoneBtnUnchecked"); //make it colorful, do it also for the delete button
     doneBtn.onclick = function () {
         console.log("\n\n\n\nbefore it gets clicked, we need to fetch");
         fetch("http://localhost:3000/tasks")
@@ -178,7 +186,8 @@ function createDoneBtn(daten) {
                 done(doneBtn, specificData);
             })
     };
-    return doneBtn;
+    doneBtnTd.appendChild(doneBtn)
+    return doneBtnTd;
 };
 
 //Done Button - When it's clicked
@@ -203,7 +212,8 @@ function done(doneBtn, daten) {
             .then((data) => {
                 console.log("Task has been updated to: UNCOMPLETED\nHere is the current data now", data);
                 console.log("Task is UNCOMPLETED so it needs to be checked off / white");
-                doneBtn.style.backgroundColor = "white";
+                doneBtn.classList.remove("myDoneBtnChecked")
+                doneBtn.classList.add("myDoneBtnUnchecked")
                 //make it colorful, do it also for the delete button
             })
     }
@@ -227,7 +237,8 @@ function done(doneBtn, daten) {
             .then((data) => {
                 console.log("Task has been updated to: COMPLETED\nHere is the current data now", data);
                 console.log("Task is now COMPLETED, meaning it should be checked on / green ");
-                doneBtn.style.backgroundColor = "green";
+                doneBtn.classList.add("myDoneBtnChecked")
+                doneBtn.classList.remove("myDoneBtnUnchecked")
                 //make it colorful, do it also for the delete button
             })
     };
@@ -239,7 +250,7 @@ function createDelBtn(taskid) {
     const quickBtn = document.createElement("td");
     const btn = document.createElement("button");
     btn.innerText = "🗑️";
-    btn.classList.add('nr' + taskid);
+    btn.classList.add('nr' + taskid, "myDeleteBtn");
     btn.onclick = function () {
         console.log("\n\n\n\nYou clicked the delete button with the ID: ", taskid)
         delTask(taskid);
@@ -280,9 +291,13 @@ function delTask(taskid) {
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    //uberall bei /taksks ersetzen mit /auth/cookie/!!!!!!!!!!!!!!!!!\
+    //uberall credentials include!
     indexTasks();
 
     document.getElementById("login").addEventListener("click", () => {
         window.open("login.html", "_blank", "popup");
     });
+
+    //isUserLoggedIn() (mit dem GET request!!!)
 });
