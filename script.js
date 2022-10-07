@@ -1,7 +1,16 @@
 
 function indexTasks() {
-    fetch("http://localhost:3000/tasks")
-        .then((response) => response.json())
+    fetch("http://127.0.0.1:3000/auth/cookie/tasks", {
+        credentials: "include"
+    })
+        .then((response) => {
+            if (response.status == 401) {
+                alert("You are not logged in.\nLog in to continue")
+                window.location.href = "login.html"
+            } else {
+                return response.json()
+            }
+        })
         .then((data) => renderTasks(data))
 };
 
@@ -86,7 +95,7 @@ function addTask() {
     taskMaker.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
             console.log("Creating your \'", taskMaker.value, "\' task...");
-            console.log("This is the taskMaker: ",taskMaker)
+            console.log("This is the taskMaker: ", taskMaker)
             createTask(taskMaker);
             newAddBtn.replaceWith(oldAddBtn)
             console.log("Old Button restored")
@@ -94,7 +103,7 @@ function addTask() {
     });
     const platzhalter = document.querySelector(".platzhalter");
     platzhalter.append(taskMaker)
-    taskMaker.focus();  
+    taskMaker.focus();
     console.log("here is a field to type your change in")
 
     const oldAddBtn = document.getElementsByClassName("def")[0]
@@ -109,7 +118,7 @@ function addTask() {
         console.log("Old Button restored")
     })
     oldAddBtn.replaceWith(newAddBtn)
-    
+
     // let oldAddBtn = document.getElementsByClassName("abc")[0]
     // let newAddBtn = document.createElement("button")
     // console.log("this is the old Add Button: ", oldAddBtn)
@@ -127,7 +136,7 @@ function addTask() {
     //     newAddBtnn.addEventListener("click", function () {
     //         alert("you clicked me")
     //     })
-        
+
     // } else {
     //     console.log("This should be the first input field, lets check that")
     //     console.log("is there another input field?: " ,false);
@@ -148,7 +157,9 @@ function addTask() {
 //Add Button - Fetch newly added data
 function createTask(taskMaker) {
     console.log("I have to fetch to see what new ID i can give your new Task");
-    fetch("http://localhost:3000/tasks")
+    fetch("http://127.0.0.1:3000/auth/cookie/tasks", {
+        credentials: "include",
+    })
         .then((response) => response.json())
         .then((data) => {
             let newid = (data.length + 1);
@@ -158,7 +169,8 @@ function createTask(taskMaker) {
                 "completed": false
             };
             console.log("I fetched, the new task is going to have the id: ", newid);
-            fetch('http://localhost:3000/tasks', {
+            fetch("http://127.0.0.1:3000/auth/cookie/tasks", {
+                credentials: "include",
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -200,7 +212,8 @@ function editTask(daten) {
         completed: daten.completed
     }
     console.log(newDaten)
-    fetch("http://localhost:3000/tasks", {
+    fetch("http://127.0.0.1:3000/auth/cookie/tasks", {
+        credentials: "include",
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -226,7 +239,9 @@ function createDoneBtn(daten) {
     daten.completed ? doneBtn.classList.add("myDoneBtnChecked") : doneBtn.classList.add("myDoneBtnUnchecked"); //make it colorful, do it also for the delete button
     doneBtn.onclick = function () {
         console.log("\n\n\n\nbefore it gets clicked, we need to fetch");
-        fetch("http://localhost:3000/tasks")
+        fetch("http://127.0.0.1:3000/auth/cookie/tasks", {
+            credentials: "include",
+        })
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
@@ -250,7 +265,8 @@ function done(doneBtn, daten) {
             completed: false
         }
         console.log("I am going to fetch:", datenf, " with a put method");
-        fetch("http://localhost:3000/tasks", {
+        fetch("http://127.0.0.1:3000/auth/cookie/tasks", {
+            credentials: "include",
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -275,7 +291,8 @@ function done(doneBtn, daten) {
             completed: true
         };
         console.log("I am going to fetch:", datent, " with a put method");
-        fetch("http://localhost:3000/tasks", {
+        fetch("http://127.0.0.1:3000/auth/cookie/tasks", {
+            credentials: "include",
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -323,7 +340,7 @@ function delTask(taskid) {
     mull[0].remove();
     mull[0].remove();
 
-    fetch('http://localhost:3000/task/' + taskid, {
+    fetch("http://127.0.0.1:3000/auth/cookie/task/" + taskid, {
         method: 'DELETE',
         credentials: "include",
         headers: {
@@ -345,7 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
     indexTasks();
 
     document.getElementById("login").addEventListener("click", () => {
-        window.open("login.html", "_blank");
+        window.location.href = "/login.html";
     });
 
     //isUserLoggedIn() (mit dem GET request!!!)

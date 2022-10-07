@@ -1,0 +1,204 @@
+commit c9f002d496d967a59ab4f6ac2d179a2962ca0413
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Fri Oct 7 13:59:56 2022 +0200
+
+    feat: you can log in, giving you a  cookie
+
+commit 60a7750d97fa335e929b80cbc9e060dfed0798a9
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Fri Oct 7 13:25:05 2022 +0200
+
+    feat: added login.css
+
+commit 349e5c70065bee11f02a1bd81b57d9b2e5c24ea4
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Fri Oct 7 13:21:33 2022 +0200
+
+    fix: addBtn keeps its looks when using mouse
+
+commit 134ced001eafb363a349a05992500eb096aedfd2
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Fri Oct 7 13:18:25 2022 +0200
+
+    fix: addBtn doesn't duplicate when using clicks
+
+commit c773b43256ca922f4a91770d8c870420b70dc1e4
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Fri Oct 7 11:03:01 2022 +0200
+
+    feat: log in page has a not working submit button
+
+commit 1915547d2d5d963539156d0d016a3de553c55529
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Thu Oct 6 20:09:37 2022 -0700
+
+    fix: centered task list
+
+commit 947f6fd66b43fc444ea83d277db1ae1cf47b2350
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Thu Oct 6 19:45:02 2022 -0700
+
+    fix: id replaced with "○"
+
+commit 0401ab00d8c7b914589cea6af86933d5897a6ac7
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Thu Oct 6 19:03:01 2022 -0700
+
+    feat: clicking on the task now edits it
+
+commit 46efcb3eaf096b291b0d6a4d37e45f8608340c11
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Thu Oct 6 16:46:09 2022 -0700
+
+    fix: cleaned the code and added comments
+
+commit 7fc01b53114f03239103260775a955c9462e68a3
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Thu Oct 6 16:17:17 2022 -0700
+
+    feat: addBtn logs what its doing
+
+commit 12f3998eeedddbabeacd4acdf39ecfa0b5bbb4f2
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Thu Oct 6 16:06:33 2022 -0700
+
+    feat: delBtn logs what it does
+
+commit 4a69605dc85364d0d3ff0c602c8c029d1c67c6f8
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Thu Oct 6 15:55:43 2022 -0700
+
+    fix: doneBtn doesn't rely on index order
+
+commit fb0c69acf28b595dd3f74277086f855681b88815
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Thu Oct 6 15:08:05 2022 -0700
+
+    fix: completed button fetches data everytime its clicked rather than in the creatioon only
+
+commit 9570422f78ce2e153aecd58d9a2ebde075624c4a
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Thu Oct 6 14:23:04 2022 -0700
+
+    feat: completed button is colorful
+
+commit c2643b2b96a2d9284c96d51f3b9a6d244458520b
+Merge: 65fa6bb 8038e8f
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Thu Oct 6 12:58:31 2022 -0700
+
+    Merge branch 'master' of https://github.com/ArcadeFortune/Prufung
+
+commit 65fa6bba088080028f4545e13035131a14239bc0
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Thu Oct 6 12:56:09 2022 -0700
+
+    feat: added a "glow-on-hover" buttons in css
+
+commit 8038e8f2c8de47e353722b1b7a6534998bffbb21
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Thu Oct 6 17:32:43 2022 +0200
+
+    fix: done button still gives errors..
+
+commit 0633567a4ef7728a80f87a59a126560e42377565
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Thu Oct 6 15:46:13 2022 +0200
+
+    feat: added a completed button without functions
+
+commit 2ac75bd914f6c999e25c2fe48f5a605704cd6972
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Thu Oct 6 15:04:51 2022 +0200
+
+    fix: delete button now delets the whole row
+
+commit 2cdc96150d5344ab10380c7df107047f7692cd95
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Thu Oct 6 14:26:03 2022 +0200
+
+    feat: every entry now has their own class
+
+commit 2352593255764dd9da3caac5b431561d56d64fdd
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Thu Oct 6 13:56:49 2022 +0200
+
+    feat: made delete/complete button somewhat functional
+
+commit 4292358e80b4094a17c583cbdccbf23a5bc34173
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Thu Oct 6 13:12:40 2022 +0200
+
+    feat: added add Button with full functionality
+
+commit 3b3ee5fda1ee6cc20c6581c640d5b500612bfa18
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Thu Oct 6 11:10:39 2022 +0200
+
+    feat: added a addBtn for dialog for new task
+
+commit 80355b20d8f23e71bc7eae75132e0f7eec510c49
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Thu Oct 6 09:46:54 2022 +0200
+
+    feat: you can see your basic tasks now
+
+commit 57149627363bd2610210de3ca85db122c01ffad7
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Wed Oct 5 14:59:58 2022 -0700
+
+    fix: weird h1 element being too big is now fixed
+
+commit 9a1f53fe889bcd3e9f26f5dd9d8e4214ab0b9516
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Wed Oct 5 14:51:14 2022 -0700
+
+    fix: made login button perfectly centered
+
+commit 4bf813d59768cef50dfc8109660a3ab10e280182
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Wed Oct 5 14:16:11 2022 -0700
+
+    fix: fiveserver plugin doesn't annoy me anymore
+
+commit 3ae172aae6d38fb166769bb1a75d3da7d167ee61
+Author: ArcadeFortune <alessionights@gmail.com>
+Date:   Wed Oct 5 14:14:22 2022 -0700
+
+    feat: added simpel Log in page
+
+commit 054a497f02b26e03b4ae80c2d776d76a143ecbf2
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Wed Oct 5 16:41:42 2022 +0200
+
+    feat: added basic grid for the login buton
+
+commit 7305639e684d6e17762e149ef4c18450cc46150b
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Wed Oct 5 16:30:33 2022 +0200
+
+    Delete: deleted irrelevant files
+
+commit c883fa1433371d7a80c9ff426758d0e090e4aa5c
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Wed Oct 5 15:12:14 2022 +0200
+
+    feat: added javascript and CSS to HTML
+
+commit 981465e811ee89222562c3d3ba3c8b97a1892065
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Wed Oct 5 15:00:17 2022 +0200
+
+    added fiveserver extension
+
+commit b90795f0704846b1e3d41df8d67aac04ccafdc24
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Wed Oct 5 14:58:52 2022 +0200
+
+    Added the HTML file
+
+commit 85173b1e7628cc3f10644485de4ee51a2da60afa
+Author: ArcadeFortune <lamaa@bzz.ch>
+Date:   Wed Oct 5 14:47:07 2022 +0200
+
+    First Commit
