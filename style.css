@@ -11,8 +11,18 @@ h1 {
 }
 caption {
   caption-side: bottom;
-  text-align: center;
+  margin-left: 22%;
+  margin-top: -10px;
 }
+table {
+    margin-top: 3%;
+    margin-left: 45%;
+    align-items: center;
+    justify-items: center;
+
+    
+}
+
 .top {
     background-color: rgb(0, 0, 0);
     display: grid;
@@ -54,21 +64,27 @@ caption {
     text-align: center;
 }
 
+
 .center {
-    position: absolute;
+    /* position: relative;
+    left: 6%;
+    padding-top: auto; */
+    /* position: relative;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    padding: 10px;
+    padding: 10px; */
 
 
 
     /* best so far
-    background: #FFFF00;
-    position: absolute;
+    background: #FFFF00; */
+
+    /* position: relative;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); */
+    transform: translate(-50%, -50%);
+    padding-top: 200px; */
 
 
     /* position: absolute;
@@ -217,9 +233,8 @@ h1 a {
     border: none;
     outline: none;
     color: #fff;
-    background: #111;
+    background: #333;
     cursor: pointer;
-    position: relative;
     z-index: 0;
     border-radius: 10px;
 }

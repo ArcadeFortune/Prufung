@@ -18,7 +18,6 @@ function renderTasks(tasks) {
     tasks.forEach((tasks) => {
         addRow(tasks)
     });
-    tableCaption.className = "glow-on-hover"
     tableCaption.append(platzhalter);
     tableCaption.appendChild(addBtn); //so the addBtn stays under the list for the whole time
 };
@@ -67,9 +66,9 @@ function addRow(daten) {
 function createCell(text, taskid) {
     const cell = document.createElement("td");
     cell.innerText = text;
-    cell.classList.add("nr" + taskid, "center");
+    cell.classList.add("nr" + taskid);
     cell.style.paddingRight = "20px"
-    cell.style.paddingBottom = "4px"
+    cell.style.paddingBottom = "3px"
     return cell;
 };
 
