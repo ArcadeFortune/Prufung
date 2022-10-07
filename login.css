@@ -1,0 +1,7 @@
+#loggedIn {
+    background-color: red;
+}
+
+#notLoggedIn {
+    background-color: green;
+}

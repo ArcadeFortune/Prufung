@@ -345,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
     indexTasks();
 
     document.getElementById("login").addEventListener("click", () => {
-        window.open("login.html", "_blank", "popup");
+        window.open("login.html", "_blank");
     });
 
     //isUserLoggedIn() (mit dem GET request!!!)

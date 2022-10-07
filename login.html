@@ -4,29 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="login.css">
     
     <script> 
 
     
-    const divWhenNotLoggedIn = document.getElementById("notLoggedIn")
-    const divWehnLoggedIn = document.getElementById("loggedIn")
+    const loggedInDiv = document.getElementById("loggedIn")
+    const notLoggedInDiv = document.getElementById("notLoggedIn")
     document.addEventListener("DOMContentLoaded", () => {
         checkLoggedIn();
 
         document.getElementById("login2").addEventListener("submit", function (event) {
+            event.preventDefault()
+            console.log("clicked")
             console.log("Sie haben auf submit geschrieben")
-            event.preventDefautl()
             const email = document.getElementById("emailInput").value
             const password = document.getElementById("passwordInput").value
             const login = {
                 email: email,
                 password: password
             }
-            alert(JSON.stringify(login))
-            console.log("hier ist die response")
+            console.log(JSON.stringify(login))
+            console.log("hier ist die response", JSON.stringify(login))
             fetch("http://127.0.0.1:3000/auth/cookie/login", {
                 credentials:"include",
                 method: "POST",
@@ -34,6 +33,10 @@
                 headers: {
                     "Content-Type": "application/json"
                 }
+                })
+                .then((response) => response.json())
+                .then((daten) => {
+                    console.log('I successfully fetched:', daten);
             })
         })
 
@@ -41,13 +44,27 @@
 
     function checkLoggedIn() {
         fetch("http://127.0.0.1:3000/auth/cookie/status", {
-            credentials: "include"
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            }
         }).then(function (response) {
             console.log(response)
             if (response.status === 401) {
+                alert("Sie sind nicht eingeloggt")
                 console.log("sie sind nicht eingeloggt")
+                notLoggedInDiv.style.display = "inherit"
+                loggedInDiv.style.display = "hidden"
                 // divWehnLoggedIn.style.display = "hidden" //not making it hidden
                 // divWhenNotLoggedIn.style.display = "inherit"
+            }　else {
+                console.log("Sie sind eingeloggt")
+                console.log(notLoggedInDiv)
+                console.log(loggedInDiv)
+                console.log(document.getElementById("loggedInDiv"))
+                let body = document.querySelector("body")
+                console.log(body)
+
             }
         })
     }
@@ -61,20 +78,18 @@
     <div id="loggedIn" class="hidden">
         <p>Sie sind eingeloggt!</p>
     </div>
-        <div id="notLoggedIn" class="hidden">
-            <h1>LOGIN</h1>
-            <form id="login2">
-            <div>
-                <label for="emailInput">
-                <input type="email" name="email" id="emailInput" placeholder="E-mail" required>
-            </label>
-            </div>
-            <div>
-                <label for="passwordInput"></label>
-                <input type="password" name="password" id="passwordInput" placeholder="Passwort" required>
-            </div>
-            <input type="submit"></form>
+
+    <div id="notLoggedIn" class="hidden">
+        <h1>LOGIN</h1>
+        <form id="login2">
+        <div>
+            <input type="email" name="email" id="emailInput" placeholder="E-mail" required>
         </div>
+        <div>
+            <input type="password" name="password" id="passwordInput" placeholder="Passwort" required>
+        </div>
+        <input type="submit"></form>
+    </div>
 
 </body>
 </html>
