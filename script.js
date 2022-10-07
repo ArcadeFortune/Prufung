@@ -1,3 +1,4 @@
+
 function indexTasks() {
     fetch("http://localhost:3000/tasks")
         .then((response) => response.json())
@@ -10,7 +11,7 @@ function renderTasks(tasks) {
     const addBtn = document.createElement("button");
     const platzhalter = document.createElement("p");
     addBtn.innerText = "Hinzufügen";
-    addBtn.classList.add("login", "btn", "abc")   
+    addBtn.classList.add("login", "btn", "abc")
     platzhalter.className = "platzhalter";
     addBtn.onclick = function () {
         addTask()
@@ -26,7 +27,7 @@ function renderTasks(tasks) {
 
 function addRow(daten) {
     const tableBody = document.querySelector("tbody");
-    tableBody.className="center"
+    tableBody.className = "center"
     const tableRow = document.createElement("tr");
     tableRow.append(
         createCell("○", daten.id),
@@ -65,11 +66,10 @@ function addRow(daten) {
 //Einzelne Komponenten für eine ROW
 //Cell - Creation
 function createCell(text, taskid) {
-    const cell = document.createElement("td");  
+    const cell = document.createElement("td");
     if (typeof text === 'string') {
-        console.log("this cell is a String  ")
         cell.innerText = text;
-    }    
+    }
     cell.classList.add("nr" + taskid);
     cell.style.paddingRight = "20px"
     cell.style.paddingBottom = "3px"
@@ -86,26 +86,74 @@ function addTask() {
     taskMaker.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
             console.log("Creating your \'", taskMaker.value, "\' task...");
-            createTask(taskMaker.value);
-            taskMaker.remove();
+            console.log("This is the taskMaker: ",taskMaker)
+            createTask(taskMaker);
+            newAddBtn.replaceWith(oldAddBtn)
+            console.log("Old Button restored")
         };
     });
-    const test = document.querySelector(".platzhalter");
-    test.append(taskMaker);
-    taskMaker.focus();
+    const platzhalter = document.querySelector(".platzhalter");
+    platzhalter.append(taskMaker)
+    taskMaker.focus();  
+    console.log("here is a field to type your change in")
+
+    const oldAddBtn = document.getElementsByClassName("abc")[0]
+    const newAddBtn = document.createElement("button")
+    newAddBtn.classList.add("login", "btn")
+    newAddBtn.addEventListener("click", () => {
+        createTask(taskMaker)
+        console.log("creating the new task: ", taskMaker.value)
+
+        newAddBtn.replaceWith(oldAddBtn)
+        console.log("Old Button restored")
+    })
+    oldAddBtn.replaceWith(newAddBtn)
+    
+    // let oldAddBtn = document.getElementsByClassName("abc")[0]
+    // let newAddBtn = document.createElement("button")
+    // console.log("this is the old Add Button: ", oldAddBtn)
+    // newAddBtn.innerText = "Hinzufügen"
+    // newAddBtn.classList.add("login", "btn", "abc", "newBtn")
+
+    // if (typeof document.getElementsByClassName("taskMaker")[0] != "undefined") {
+    //     console.log("SSSSSSSSSSSSSSSSSSSSSSSSThis should be the second input field")
+    //     console.log("is there another input Field?: " ,true);
+    //     console.log("Creating your \'", taskMaker.value, "\' task...");
+    //     console.log("This is the taskMaker: ",taskMaker)
+    //     console.log("This is the taskMaker.value: ",taskMaker.value)
+    //     let newAddBtnn = document.getElementsByClassName("newBtn")[0]
+    //     console.log(newAddBtnn)
+    //     newAddBtnn.addEventListener("click", function () {
+    //         alert("you clicked me")
+    //     })
+        
+    // } else {
+    //     console.log("This should be the first input field, lets check that")
+    //     console.log("is there another input field?: " ,false);
+    //     newAddBtn.onclick = function () {
+    //         console.log("\n\n\n\n\n\n\n\nyou clicked the new button")
+    //         addTask(taskMaker)
+    //         taskMaker.remove() 
+    //     }
+    //     console.log("creating a new button so that it doesn't clone the text field that has a clicked me function: ", newAddBtn)
+    //     oldAddBtn.replaceWith(newAddBtn)
+    //     console.log("I replaced the old Add Button with the new Add Button and gave you the taskMaker")
+
+    //     test.append(taskMaker);
+    //     taskMaker.focus();  
+    // }
 };
 
 //Add Button - Fetch newly added data
-function createTask(task) {
+function createTask(taskMaker) {
     console.log("I have to fetch to see what new ID i can give your new Task");
     fetch("http://localhost:3000/tasks")
         .then((response) => response.json())
         .then((data) => {
             let newid = (data.length + 1);
-
             const daten = {
                 "id": newid,
-                "title": task,
+                "title": taskMaker.value,
                 "completed": false
             };
             console.log("I fetched, the new task is going to have the id: ", newid);
@@ -120,7 +168,7 @@ function createTask(task) {
                 .then((daten) => {
                     console.log('I successfully fetched:', daten);
                     addRow(daten);
-
+                    taskMaker.remove();
                 })
         });
 };
@@ -133,7 +181,7 @@ function createEditBtn(daten) {
     editBtn.innerText = daten.title;
     editBtn.classList.add("nr" + daten.id, "myBtn")
     editBtn.onclick = function () {
-        editTask(daten);        
+        editTask(daten);
     };
     editBtn.style.width = "200px"
     editBtnTd.appendChild(editBtn)
@@ -143,8 +191,8 @@ function createEditBtn(daten) {
 //Edit Button - When it's clicked
 function editTask(daten) {
     console.log("\n\n\n\nI see you would like to edit this task? \'", daten.title, "\' with the ID: ", daten.id);
-    newTitle = window.prompt("What would you like to edit Task #"+ daten.id +" to?")
-    
+    newTitle = window.prompt("What would you like to edit Task #" + daten.id + " to?")
+
     const newDaten = {
         id: daten.id,
         title: newTitle,
@@ -152,19 +200,19 @@ function editTask(daten) {
     }
     console.log(newDaten)
     fetch("http://localhost:3000/tasks", {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(newDaten)
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newDaten)
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Task has been updated to: ", data);
+            console.log(document.getElementsByClassName("nr" + data.id))
+            document.getElementsByClassName("nr" + data.id)[1].innerText = data.title
         })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Task has been updated to: ",data);
-                console.log(document.getElementsByClassName("nr" + data.id))
-                document.getElementsByClassName("nr" + data.id)[1].innerText = data.title
-            })
-            
+
 };
 
 
