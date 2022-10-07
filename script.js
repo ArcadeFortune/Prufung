@@ -29,7 +29,7 @@ function addRow(daten) {
     const tableRow = document.createElement("tr");
     tableRow.append(
         createCell(daten.id, daten.id),
-        createCell(daten.title, daten.id),
+        createEditBtn(daten),
         createDoneBtn(daten),
         createDelBtn(daten.id));
     tableBody.appendChild(tableRow);
@@ -117,6 +117,45 @@ function createTask(task) {
 
                 })
         });
+};
+
+
+//Edit Button - Creation
+function createEditBtn(daten) {
+    const editBtn = document.createElement("button");
+    editBtn.innerText = daten.title;
+    editBtn.className = "nr" + daten.id;
+    editBtn.onclick = function () {
+        editTask(daten);        
+    };
+    return editBtn;
+};
+
+//Edit Button - When it's clicked
+function editTask(daten) {
+    console.log("\n\n\n\nI see you would like to edit this task? \'", daten.title, "\' with the ID: ", daten.id);
+    newTitle = window.prompt("What would you like to edit Task #"+ daten.id +" to?")
+    
+    const newDaten = {
+        id: daten.id,
+        title: newTitle,
+        completed: daten.completed
+    }
+    console.log(newDaten)
+    fetch("http://localhost:3000/tasks", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newDaten)
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Task has been updated to: ",data);
+                console.log(document.getElementsByClassName("nr" + data.id))
+                document.getElementsByClassName("nr" + data.id)[1].innerText = data.title
+            })
+            
 };
 
 
