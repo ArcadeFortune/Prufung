@@ -11,7 +11,7 @@ function renderTasks(tasks) {
     const addBtn = document.createElement("button");
     const platzhalter = document.createElement("p");
     addBtn.innerText = "Hinzufügen";
-    addBtn.classList.add("login", "btn", "abc")
+    addBtn.classList.add("login", "btn", "abc", "def")
     platzhalter.className = "platzhalter";
     addBtn.onclick = function () {
         addTask()
@@ -97,9 +97,10 @@ function addTask() {
     taskMaker.focus();  
     console.log("here is a field to type your change in")
 
-    const oldAddBtn = document.getElementsByClassName("abc")[0]
+    const oldAddBtn = document.getElementsByClassName("def")[0]
     const newAddBtn = document.createElement("button")
-    newAddBtn.classList.add("login", "btn")
+    newAddBtn.classList.add("login", "btn", "abc")
+    newAddBtn.innerHTML = "Hinzufügen"
     newAddBtn.addEventListener("click", () => {
         createTask(taskMaker)
         console.log("creating the new task: ", taskMaker.value)
