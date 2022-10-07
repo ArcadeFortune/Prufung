@@ -5,6 +5,9 @@ Repository für die Prüfung vom Modul M294.
 Bedienung: Backend im Explorer öffnen => in der Taskleiste "cmd" schreiben und ENTER drücken => "npm install" schreiben und ENTER drücken => "npm start" schreiben und ENTER drücken => Im Liveserver öffnen => login: Email: alles möglich Passwort: m294
 
 
+Git Log befindet sich in: gitlog.txt
+
+
 Autor: Arcade Fortune
 
 
